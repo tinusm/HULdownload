@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- JQuery import -->
+  <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+</head>
+
+<body>
+
+  <!-- Upload file form -->
+  <form id="upload-file-form">
+    <label for="download-file-input">Download File</label>
+    <input id="download-file-input" type="button" name="downloadfile" />
+    <br />
+    <span id="download-file-message"></span>
+  </form>
+  <br />
+  <hr />
+  <!-- Javascript functions -->
+  <script>
+  
+    // bind the on-change event for the input element (triggered when a file
+    // is chosen)
+    $(document).ready(function() {
+      $("#download-file-input").on("click", uploadFile);
+    });
+    
+    /**
+     * Upload the file sending it via Ajax at the Spring Boot server.
+     */
+    function uploadFile() {
+    var i=	document.getElementById("download-file-input").value;
+    alert(i);
+      $.ajax({
+       // url: "/downloadFile?userid="+1112,
+      url: "/downloadFile",
+        type: "GET",
+        
+        success: function () {
+ 
+          // Handle upload success
+          $("#download-file-message").text("File succesfully downloaded");
+          
+        },
+        error: function () {
+          // Handle upload error
+          $("#download-file-message").text(
+              "Error in downloading");
+        }
+      });
+    
+    } // function uploadFile
+  </script>
+  
+</body>
+
+</html>
