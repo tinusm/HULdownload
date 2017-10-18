@@ -101,9 +101,12 @@ public class MainController {
 				l++;
 
 			}
-
-			FileOutputStream outputStream = new FileOutputStream(new File("HUL.xlsx"));
+            
+		//	FileOutputStream outputStream = new FileOutputStream(new File("HUL.xlsx"));"c:\\"+fname+".xls"
+			FileOutputStream outputStream = new FileOutputStream(new File("c:\\"+"HUL.xls"));
+			
 			workbook.write(outputStream);
+			outputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
