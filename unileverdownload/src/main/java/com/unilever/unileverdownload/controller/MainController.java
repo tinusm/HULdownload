@@ -49,7 +49,7 @@ public class MainController {
 
 	/**
 	 * Show the index page containing the form for uploading a file.
-	 **/
+	 */
 	@RequestMapping("/")
 	public String index() {
 		return "index.html";
