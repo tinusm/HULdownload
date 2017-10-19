@@ -15,7 +15,9 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -84,7 +86,7 @@ public class MainController {
 			rs = st.executeQuery(sql);
 			ResultSetMetaData metadata = rs.getMetaData();
 			int numberOfColumns = metadata.getColumnCount();
-
+			Timestamp curentDate = null;
 			Row header = sheet.createRow(0);
 
 			for (int i = 1, j = 0; i <= numberOfColumns; i++, j++) {
@@ -93,6 +95,7 @@ public class MainController {
 
 			int l = 1;
 			while (rs.next()) {
+				curentDate = rs.getTimestamp("CurrentDate");
 				XSSFRow row = sheet.createRow((short) l);
 				for (int m = 0, n = 1; n <= numberOfColumns; m++) {
 					row.createCell((short) m).setCellValue(rs.getString(n++));
@@ -101,14 +104,28 @@ public class MainController {
 				l++;
 
 			}
-            
-		//	FileOutputStream outputStream = new FileOutputStream(new File("HUL.xlsx"));"c:\\"+fname+".xls"
-			FileOutputStream outputStream = new FileOutputStream(new File("c:\\"+"HUL.xls"));
-			
+
+			// String path ="C:\\HUL.xlsx";
+
+			String S = new SimpleDateFormat("ddMMyyyyHHmmss").format(curentDate);
+
+			/* Timestamp Changes - Start */
+			String filename = "C:\\HUL_IPM_MODEL_" + S + ".xlsx";
+			/* Timestamp Changes - End */
+			FileOutputStream outputStream = new FileOutputStream(new File(filename));
 			workbook.write(outputStream);
-			outputStream.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				st.close();
+				rs.close();
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
 		}
 
 		return new ResponseEntity<>(HttpStatus.OK);
