@@ -21,6 +21,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -70,7 +73,8 @@ public class MainController {
 	 */
 	@RequestMapping(value = "/downloadFile", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<?> uploadFile() {
+	public void uploadFile(HttpServletRequest request,
+            HttpServletResponse response) {
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFSheet sheet = workbook.createSheet("IPM Model");
@@ -105,15 +109,18 @@ public class MainController {
 
 			}
 
-			// String path ="C:\\HUL.xlsx";
+			
 
 			String S = new SimpleDateFormat("ddMMyyyyHHmmss").format(curentDate);
 
 			/* Timestamp Changes - Start */
-			String filename = "C:\\HUL_IPM_MODEL_" + S + ".xlsx";
+			String filename = "HUL_IPM_MODEL_" + S + ".xls";
 			/* Timestamp Changes - End */
+			response.setContentType("application/vnd.ms-excel");
+           response.setHeader("Content-Disposition", "attachment; filename="+filename);
 			FileOutputStream outputStream = new FileOutputStream(new File(filename));
-			workbook.write(outputStream);
+			//workbook.write(outputStream);
+			workbook.write(response.getOutputStream());
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -128,7 +135,7 @@ public class MainController {
 
 		}
 
-		return new ResponseEntity<>(HttpStatus.OK);
+		
 	}
 
 }
