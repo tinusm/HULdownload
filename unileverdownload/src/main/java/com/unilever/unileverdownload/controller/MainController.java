@@ -28,6 +28,10 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
@@ -76,8 +80,8 @@ public class MainController {
 	public void uploadFile(HttpServletRequest request,
             HttpServletResponse response) {
 
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFSheet sheet = workbook.createSheet("IPM Model");
+		HSSFWorkbook workbook = new HSSFWorkbook();
+		HSSFSheet sheet = workbook.createSheet("IPM Model");
 		DBconnection dbConnect = new DBconnection();
 		Connection conn = null;
 		Statement st = null;
@@ -100,7 +104,7 @@ public class MainController {
 			int l = 1;
 			while (rs.next()) {
 				curentDate = rs.getTimestamp("CurrentDate");
-				XSSFRow row = sheet.createRow((short) l);
+				HSSFRow row = sheet.createRow((short) l);
 				for (int m = 0, n = 1; n <= numberOfColumns; m++) {
 					row.createCell((short) m).setCellValue(rs.getString(n++));
 				}
