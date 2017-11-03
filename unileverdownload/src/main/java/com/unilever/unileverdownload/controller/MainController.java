@@ -90,7 +90,7 @@ public class MainController {
 		conn = DBconnection.createDbConn();
 		try {
 			//String sql = "select * from IPM_MODEL";
-			String sql ="select SKU_NO, SKU_Name, Location, Location_Type, SKU_Location, SKU_Classification, Source, Category, Service_Level, Average_Weekly_Demand, SDFE_Per, SDFE,Lot_Sizes, OR_Delivery, Cycle_Time, Avg_Replen_Lead_Time, Lead_Time_Variability, SD_Variability, C_Factor_Sales, K_Factor_Sales, Model_Safety_Stock, Model_Safety_Stock_Weeks, Model_Safety_Stock_Days, Minstock_AftCapping_Weeks, Maxstock_Weeks, Minstock_AftCapping_CS, Maxstock_CS, CurrentSS_Weeks, Price, CurrentSS_Value, Proposed_IPMSS_Value, Min_Norms_Weeks, Max_Norms_Weeks, MinStock_Value, MaxStock_Value, Avg_Cycle_Stock, CurrentDate from IPM_MODEL";
+			String sql ="select SKU_NO, SKU_Name, Location, Location_Type, SKU_Location, SKU_Classification, Source, Category, Service_Level, Average_Weekly_Demand, SDFE_Per, SDFE,Lot_Sizes, OR_Delivery, Cycle_Time, Avg_Replen_Lead_Time, Lead_Time_Variability, SD_Variability, C_Factor_Sales, K_Factor_Sales, Model_Safety_Stock, Model_Safety_Stock_Weeks, Model_Safety_Stock_Days, Minstock_AftCapping_Weeks, Maxstock_Weeks, Minstock_AftCapping_CS, Maxstock_CS, CurrentSS_Weeks, Price, CurrentSS_Value, Proposed_IPMSS_Value, Min_Norms_Weeks, Max_Norms_Weeks, MinStock_Value, MaxStock_Value, Avg_Cycle_Stock, current_date1 from IPM_MODEL";
 			st = conn.createStatement();
 			rs = st.executeQuery(sql);
 			ResultSetMetaData metadata = rs.getMetaData();
@@ -104,7 +104,7 @@ public class MainController {
 
 			int l = 1;
 			while (rs.next()) {
-				curentDate = rs.getTimestamp("CurrentDate");
+				curentDate = rs.getTimestamp("current_date1");
 				HSSFRow row = sheet.createRow((short) l);
 				for (int m = 0, n = 1; n <= numberOfColumns; m++) {
 					row.createCell((short) m).setCellValue(rs.getString(n++));
